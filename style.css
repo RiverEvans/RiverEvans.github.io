@@ -1,0 +1,261 @@
+/* Reset & Body */
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #000;
+  overscroll-behavior: none;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #eaeaea;
+  line-height: 1.6;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #000; /* fully black background */
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #2a2a2a;
+  background-color: #0d0d0d;
+}
+
+.brand {
+  font-size: 1.3rem;
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  color: #eaeaea;
+  text-decoration: none;
+  margin-bottom: 3rem;
+}
+
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-left: 2rem; /* moves border in from edge */
+  border-left: 2px solid #444;
+}
+
+.nav-section {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #777;
+  padding-left: 0.5rem;
+}
+
+.nav-item {
+  font-size: 0.95rem;
+  color: #bbb;
+  text-decoration: none;
+  padding-left: 0.5rem;
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.nav-item::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background-color: #00d4ff;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.25s ease;
+}
+
+.nav-item:hover::before,
+.nav-item.active::before {
+  transform: scaleY(1);
+}
+
+.nav-item:hover,
+.nav-item.active {
+  color: #00d4ff;
+}
+
+/* Main Layout */
+.home-main,
+.project-main {
+  margin-left: 280px;
+  padding: 6rem 3rem;
+}
+
+.main-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 2rem; /* spacing from screen edge */
+}
+
+/* Hero sections */
+.home-hero,
+.project-hero {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.home-hero h1,
+.project-hero h1 {
+  font-size: 2.8rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.project-hero h1 {
+  font-size: 2.4rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+
+.home-hero p,
+.project-hero p {
+  color: #888;
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.stat span {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.stat p {
+  color: #888;
+}
+
+/* Project Content */
+.project-content {
+  margin: 0 auto;
+}
+
+.project-content section {
+  margin-bottom: 4rem;
+  margin-top: 2rem;
+}
+
+.project-content h2 {
+  text-align: center;
+  font-size: 1.25rem;
+  letter-spacing: 0.15em;
+  margin-top: 0;
+}
+
+.project-content p {
+  color: #bbb;
+}
+
+/* Media containers for images or videos */
+.hero-media,
+.project-media {
+  width: 100%;
+  max-width: 520px;
+  margin: 2rem auto;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #111;
+  height: 300px;
+}
+
+.hero-media img,
+.project-media img,
+.hero-media video,
+.project-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px;
+}
+
+/* Lead hero media above project title */
+.hero-media-large {
+  max-width: 520px; /* same as other media */
+  width: 100%;
+  height: 400px;    /* taller than normal media */
+  margin: 2rem auto; /* centers horizontally with same gap left/right */
+  border-radius: 6px;
+  background: #111;
+  overflow: hidden;
+}
+
+.hero-media-large img,
+.hero-media-large video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .home-main,
+  .project-main {
+    margin-left: 1.5rem;
+    padding: 4rem 0;
+  }
+
+  .sidebar {
+    width: 200px;
+  }
+
+  .hero-media,
+  .project-media {
+    height: 180px;
+  }
+
+  .hero-media-large {
+    height: 250px;
+  }
+}
+/* Center the numbers above stats labels */
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  align-items: flex-start; /* numbers on top */
+  text-align: center;      /* center numbers and labels */
+  margin-top: 2rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers number and label vertically */
+}
+
+/* Featured Work grid */
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+  align-items: start;
+}
