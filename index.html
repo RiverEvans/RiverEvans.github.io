@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>River Evans – Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="page-wrapper">
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="nav-container">
+        <a class="logo-text" href="#">YN.dev</a>
+        <nav class="nav-links-wrap">
+          <ul class="nav-links">
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#resume">Resume</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <button class="nav-burger" aria-label="Menu">☰</button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero reveal" id="about">
+        <!-- Replaced video with CSS parallax background for performance -->
+        <div class="hero-content">
+          <div class="status-badge"><span class="status-dot"></span> Open to co-op · Fall 2025</div>
+          <h1 class="hero-title"><span class="name-line">River Evans</span><br><span class="title-line">Mechatronics Engineer</span></h1>
+          <p class="hero-intro">Building things at the intersection of hardware and software — robotics, embedded systems, and autonomous control. I focus on reliable, test-driven engineering for real-world systems.</p>
+
+          <div class="hero-ctas">
+            <a class="btn outline" href="#resume">View resume</a>
+            <a class="btn outline" href="#projects">See my projects</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section class="projects reveal stagger" id="projects">
+        <div class="section-header"><span class="section-label">PROJECTS</span></div>
+        <div class="projects-grid">
+          <article class="project-card reveal">
+            <div class="project-visual visual-green"></div>
+            <h3>Radar Tracking Arm</h3>
+            <p class="muted">Autonomous object detection and tracking with ultrasonic sensing, dual-Arduino control, and servo actuation.</p>
+            <div class="tags"><span>Arduino</span><span>C++</span><span>Embedded</span></div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-visual visual-blue"></div>
+            <h3>Motor Control PCB</h3>
+            <p class="muted">Custom motor driver and PCB design for brushless systems with CAN integration.</p>
+            <div class="tags"><span>KiCad</span><span>STM32</span><span>CAN</span></div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-visual visual-amber"></div>
+            <h3>Wearable Prototype</h3>
+            <p class="muted">Sensor fusion and embedded data logging for biomechanical monitoring.</p>
+            <div class="tags"><span>Python</span><span>Sensors</span><span>PCB</span></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section class="skills reveal stagger" id="skills">
+        <h2 class="section-label">SKILLS & TOOLS</h2>
+        <div class="skills-row">
+          <span class="skill-pill reveal">Python</span>
+          <span class="skill-pill reveal">C / C++</span>
+          <span class="skill-pill reveal">ROS2</span>
+          <span class="skill-pill reveal">Embedded C</span>
+          <span class="skill-pill reveal">SolidWorks</span>
+          <span class="skill-pill reveal">MATLAB</span>
+          <span class="skill-pill reveal">Git</span>
+          <span class="skill-pill reveal">KiCad</span>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="contact reveal stagger" id="contact">
+        <h2 class="section-label">GET IN TOUCH</h2>
+        <div class="contact-grid">
+          <div class="contact-card reveal">
+            <div class="contact-label">Email</div>
+            <div class="contact-value"><a href="mailto:you@university.ca">you@university.ca</a></div>
+          </div>
+          <div class="contact-card reveal">
+            <div class="contact-label">LinkedIn</div>
+            <div class="contact-value"><a href="https://linkedin.com/in/yourname" target="_blank">linkedin.com/in/yourname</a></div>
+          </div>
+          <div class="contact-card reveal">
+            <div class="contact-label">GitHub</div>
+            <div class="contact-value"><a href="https://github.com/yourname" target="_blank">github.com/yourname</a></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-left">Built by River Evans · 2025</div>
+      <div class="footer-right">Mechatronics Engineering · [University]</div>
+    </footer>
+  </div>
+
+  <script>
+    // Simple burger menu for small screens
+    const burger = document.querySelector('.nav-burger');
+    const navLinks = document.querySelector('.nav-links');
+    if (burger) {
+      burger.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+      });
+    }
+
+    // Scroll reveal using IntersectionObserver with optional staggering
+    (function(){
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            const el = entry.target;
+            // if container has stagger class, reveal children with small delays
+            if(el.classList.contains('stagger')){
+              el.classList.add('show');
+              const children = Array.from(el.querySelectorAll('.reveal'));
+              children.forEach((ch,i)=>{
+                setTimeout(()=> ch.classList.add('show'), i*90);
+              });
+            }
+            el.classList.add('show');
+            // also add .show to section label inside this element so header wipe plays
+            const label = el.querySelector('.section-label');
+            if(label) label.classList.add('show');
+            io.unobserve(el);
+          }
+        });
+      },{threshold:0.12});
+
+      document.querySelectorAll('.reveal, .stagger').forEach(el=> io.observe(el));
+    })();
+
+    // Hero parallax: update CSS variable based on hero position (rAF throttled)
+    (function(){
+      const hero = document.querySelector('.hero');
+      if(!hero) return;
+      let ticking = false;
+      function onScroll(){
+        if(ticking) return;
+        ticking = true;
+        requestAnimationFrame(()=>{
+          const rect = hero.getBoundingClientRect();
+          // translate a small fraction of its offset for subtle parallax
+          const translate = Math.round((rect.top) * 0.18);
+          hero.style.setProperty('--hero-translate', translate + 'px');
+          ticking = false;
+        });
+      }
+      window.addEventListener('scroll', onScroll, {passive:true});
+      window.addEventListener('resize', onScroll);
+      onScroll();
+    })();
+  </script>
+</body>
+</html>
